@@ -97,39 +97,6 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-import plotly.graph_objects as go
-import pandas as pd
-from sklearn.metrics import r2_score
-
-real_demand = pd.Series(real_demand[:len(predictions)], index=real_data.index[:len(predictions)])
-predictions_series = pd.Series(predictions, index=real_data.index[:len(predictions)])
-
-r_squared_monthly = []
-
-for month, group in real_demand.groupby(real_demand.index.month):
-    pred_for_month = predictions_series[group.index]
-    r_squared = r2_score(group, pred_for_month)
-    r_squared_monthly.append((month, r_squared))
-    print(f'R-squared para el mes {month}: {r_squared}')
-
-fig = go.Figure()
-
-fig.add_trace(go.Scatter(x=real_data.index, y=real_demand, mode='lines', name='Datos Reales 2024', line=dict(color='blue')))
-fig.add_trace(go.Scatter(x=real_data.index[:len(predictions)], y=predictions, mode='lines', name='Predicciones 2024', line=dict(color='red')))
-
-fig.update_layout(
-    title='Comparación de Predicciones vs Datos Reales para ORI 2024',
-    xaxis_title='Fecha',
-    yaxis_title='Estimación de Demanda por Balance (MWh)',
-    legend_title='Leyenda'
-)
-
-fig.show()
-
-for month, r_squared in r_squared_monthly:
-    print(f"R-squared para el mes {month}: {r_squared:.4f}")
-
-
 
 
 
