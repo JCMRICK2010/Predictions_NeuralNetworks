@@ -4,6 +4,7 @@ Created on Fri Mar 28 21:35:01 2025
 
 @author: Richar
 """
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -35,11 +36,13 @@ print(df.info())
 print(df.iloc[:, 1].unique())
 df['datetime'] = pd.to_datetime(df['datetime'], format='%Y-%m-%d %H:%M:%S')
 
-real_data = df.loc['2021-12':'2022-01']
-df = df.drop(real_data.index)
+
 
 df.set_index('datetime', inplace=True)
-real_data.set_index('datetime', inplace=True)
+
+real_data = df.loc['2021-12':'2022-01']
+
+df = df.drop(real_data.index)
 
 print(df.dtypes) 
 
